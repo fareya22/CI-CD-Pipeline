@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Tests
+      run: npm test
+
+    - name: Deploy to Heroku
+      if: success()  # Deploy only if tests pass
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP_NAME: your-heroku-app-name  # Replace with your Heroku app name
+      run: |
+        curl https://cli-assets.heroku.com/install.sh | sh
+        echo $HEROKU_API_KEY | heroku auth:token
+        git remote add heroku https://git.heroku.com/$HEROKU_APP_NAME.git
+        git push heroku main
