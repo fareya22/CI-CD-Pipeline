@@ -1,9 +1,10 @@
-const request = require('supertest');
-const app = require('../index');  // Adjust the path if needed
+import server from './index.js';  // Import the app
+import request from 'supertest';  // For testing
+import assert from 'assert';      // For assertions
 
 describe('GET /', () => {
-  it('responds with Hello, CI/CD Pipeline!', async () => {
-    const res = await request(app).get('/');
-    expect(res.text).toBe('Hello, CI/CD Pipeline!');
-  });
+    it('should return the expected response', async () => {
+        const response = await request(server).get('/');
+        assert.strictEqual(response.text, 'Hello, this is index.js responding!');
+    });
 });
