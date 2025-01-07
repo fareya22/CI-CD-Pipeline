@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
+    - name: intalling dep
+      run: npm ci
     - name: runing test
       run: npm test
    
