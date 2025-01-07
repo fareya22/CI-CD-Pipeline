@@ -13,7 +13,7 @@ app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
     try {
-        res.send('Index not responding!!!'); 
+        res.send('Index responding yeah!!!'); 
     } catch (err) {
         console.error("Error handling request:1", err);
         res.status(500).send('Something went wrong');
